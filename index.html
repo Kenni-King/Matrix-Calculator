@@ -135,7 +135,8 @@
                 <button class="op-btn" data-op="lu" title="LU Decomposition">LU Decomposition</button>
                 <button class="op-btn" data-op="qr" title="QR Decomposition">QR Decomposition</button>
                 <button class="op-btn" data-op="cholesky" title="Cholesky Decomposition">Cholesky</button>
-                <button class="op-btn" data-op="solve" title="Solve Ax = b">Solve System</button>
+                <button class="op-btn" data-op="system" title="Solve a system of linear (simultaneous) equations">System of Eqs</button>
+                <button class="op-btn" data-op="solve" title="Solve Ax = b from matrices A and b">Solve Ax = b</button>
               </div>
             </div>
             <div class="op-category">
@@ -186,6 +187,46 @@
           </div>
         </section>
       </div>
+
+      <!-- System of Equations Panel -->
+      <section id="system-panel" class="card system-panel hidden" aria-label="System of linear equations input">
+        <div class="card-header">
+          <h2 class="card-title">System of Linear (Simultaneous) Equations</h2>
+          <span class="system-panel-badge">Ax = b</span>
+        </div>
+        <div class="system-panel-grid">
+          <div class="system-eq-column">
+            <label for="system-equations">Enter your equations — one per line</label>
+            <textarea id="system-equations" rows="6" spellcheck="false"
+              inputmode="text" autocomplete="off" autocapitalize="none" autocorrect="off"
+              placeholder="a₁x + b₁y + c₁z = d₁&#10;a₂x + b₂y + c₂z = d₂&#10;a₃x + b₃y + c₃z = d₃"></textarea>
+            <div class="system-eq-actions">
+              <button id="btn-parse-equations" class="btn-sm" title="Parse the equations and load them into Matrix A and Matrix B">Parse &amp; Load into A / B</button>
+              <button id="btn-example-equations" class="btn-sm" title="Fill the box with a sample system">Load Example</button>
+            </div>
+            <p class="system-hint">
+              Supported forms: <code>2x + 3y - z = 5</code>, <code>x/2 = 3</code>, <code>3x = y + 4</code>.
+              Variable names are auto-detected, and equations pasted from a textbook work too
+              (mathematical <code>𝑥 𝑦 𝑧</code> letters and the <code>−</code> minus sign are recognised).
+              Leave this box empty to solve straight from Matrix A (coefficients) and Matrix B (constants column).
+            </p>
+          </div>
+          <div class="system-method-column">
+            <label for="system-method">Solution method</label>
+            <select id="system-method">
+              <option value="auto">Auto — best method for this system</option>
+              <option value="gaussjordan">Gauss-Jordan elimination</option>
+              <option value="cramer">Cramer's rule</option>
+              <option value="inverse">Matrix inverse (x = A⁻¹b)</option>
+              <option value="lu">LU decomposition</option>
+            </select>
+            <p class="system-hint system-hint-compact">
+              Every method is cross-checked with a rank test (Kronecker–Capelli theorem) so you always
+              know whether the system is consistent, and how many solutions it has.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <!-- Action Buttons -->
       <div class="actions-row">
@@ -251,7 +292,7 @@
         <div class="steps-toggle">
           <button id="btn-toggle-steps" class="btn btn-secondary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            Show Working Steps
+            <span id="toggle-steps-label">Show Working Steps</span>
           </button>
         </div>
 
